@@ -4,6 +4,7 @@ import numpy as np
 
 from .rmsa_env import RMSAEnv
 from .optical_network_env import OpticalNetworkEnv
+from optical_rl_gym.utils import Service # added by deborah djon
 
 
 class DeepRMSAEnv(RMSAEnv):
@@ -92,6 +93,9 @@ class DeepRMSAEnv(RMSAEnv):
         path = action // self.j
         block = action % self.j
         return path, block
+
+    def set_service(self, service: Service) -> None:  # added by deborah djon
+                    self.service = service
 
 
 def shortest_path_first_fit(env: DeepRMSAEnv) -> int:
