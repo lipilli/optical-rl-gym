@@ -50,6 +50,7 @@ class DeepRMSAEnv(RMSAEnv):
             return super().step([self.k_paths, self.num_spectrum_resources])
 
     def observation(self):
+        print("-----------Debugging the Observation------------------------------")
         # observation space defined as in https://github.com/xiaoliangchenUCD/DeepRMSA/blob/eb2f2442acc25574e9efb4104ea245e9e05d9821/DeepRMSA_Agent.py#L384
         source_destination_tau = np.zeros((2, self.topology.number_of_nodes()))
         min_node = min(self.service.source_id, self.service.destination_id)
@@ -57,6 +58,24 @@ class DeepRMSAEnv(RMSAEnv):
         source_destination_tau[0, min_node] = 1
         source_destination_tau[1, max_node] = 1
         spectrum_obs = np.full((self.k_paths, 2 * self.j + 3), fill_value=-1.)
+        #Todo do I still need this info on the state?
+        # print("Serice info")
+        # print(f"service_id-{self.service.service_id}")
+        # print(f"source-{self.service.source}")
+        # print(f"source_id-{self.service.source_id}")
+        # print(f"destination-{self.service.destination}")
+        # print(f"destination_id-{self.service.destination_id}")
+        # print(f"bit_rate-{self.service.bit_rate}")
+        # print(f"best_modulation-{self.service.best_modulation}")
+        # print(f"accepted-{self.service.accepted}")
+        # print(f"arrival_time-{self.service.arrival_time}")
+        # print(f"holding_time-{self.service.holding_time}")
+        # print(f"initial_slot-{self.service.initial_slot}")
+        # print(f"number_slots-{self.service.number_slots}")
+        # print(f"route-{self.service.route}")
+        # print(f"service_class{self.service.service_class}")
+        # print(f"wavelength-{self.service.wavelength}")
+
         for idp, path in enumerate(self.k_shortest_paths[self.service.source, self.service.destination]):
             available_slots = self.get_available_slots(path)
             num_slots = self.get_number_slots(path)
